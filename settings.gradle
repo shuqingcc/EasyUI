@@ -1,1 +1,1 @@
-include ':app', ':EasyUI_Lib'
+include ':EasyUI_Lib'
