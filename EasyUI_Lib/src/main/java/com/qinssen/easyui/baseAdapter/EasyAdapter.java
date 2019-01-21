@@ -1,7 +1,14 @@
-package com.qinssen.easyui.adapter;
+package com.qinssen.easyui.baseAdapter;
 
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +17,7 @@ import java.util.List;
  * 仿照原生RecyclerView.Adapter的实现，在原生适配器的基础上
  * 支持监听item单击事件以及支持单选模式、多选模式
  *
- * @param <VH>
+ * @param <VH> https://github.com/laoyezi/EasyAdapter.git
  */
 public abstract class EasyAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> implements View.OnClickListener {
     private OnItemClickListener onItemClickListener;
@@ -314,4 +321,57 @@ public abstract class EasyAdapter<VH extends RecyclerView.ViewHolder> extends Re
     public enum Operation {
         ORDINARY, ALL_SELECTED, REVERSE_SELECTED, ALL_CANCEL, SET_MAX_COUNT
     }
+
+
+    public static class VH extends RecyclerView.ViewHolder {
+        private SparseArray<View> mViews;
+        private View mConvertView;
+
+        private VH(View v) {
+            super(v);
+            mConvertView = v;
+            mViews = new SparseArray<>();
+        }
+
+        public static VH get(ViewGroup parent, int layoutId) {
+            View convertView = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
+            return new VH(convertView);
+        }
+
+        public <T extends View> T getView(int id) {
+            View v = mViews.get(id);
+            if (v == null) {
+                v = mConvertView.findViewById(id);
+                mViews.put(id, v);
+            }
+            return (T) v;
+        }
+
+        public void setText(int id, String value) {
+            TextView view = getView(id);
+            view.setText(value);
+        }
+
+        public void setTextColor(int id, @ColorInt int color) {
+            TextView view = getView(id);
+            view.setTextColor(color);
+        }
+
+        public void setBackgroundResource(int id, @DrawableRes int resId) {
+            View view = getView(id);
+            view.setBackgroundResource(resId);
+        }
+
+        public void setViewShow(int id, boolean isShow) {
+            View view = getView(id);
+            view.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        }
+
+        public void setImageResid(int id, int resourceId) {
+            ImageView imageView = getView(id);
+            imageView.setImageResource(resourceId);
+        }
+
+    }
+
 }
