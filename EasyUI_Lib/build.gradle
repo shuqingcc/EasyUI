@@ -1,9 +1,8 @@
 import proguard.gradle.ProGuardTask
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven' // 增加
+//apply plugin: 'com.github.dcendents.android-maven' // 增加
 apply from: 'config.gradle'
-group = 'com.github.shuqingcc'
 
 android {
     compileSdkVersion 28
@@ -86,4 +85,7 @@ task fataar(dependsOn: [gen_aar, gen_aar]) {
             exclude "libs"
         }.execute()
     }
+
+    apply from: 'maven.gradle'
+
 }
