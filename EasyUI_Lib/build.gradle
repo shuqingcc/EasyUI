@@ -1,9 +1,9 @@
 import proguard.gradle.ProGuardTask
 
 apply plugin: 'com.android.library'
-//apply plugin: 'com.github.dcendents.android-maven' // 增加
-apply from: 'config.gradle'
-
+apply plugin: 'com.github.dcendents.android-maven' // 增加
+//apply from: 'config.gradle'
+group='com.qinssen.easyui'
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -86,6 +86,6 @@ task fataar(dependsOn: [gen_aar, gen_aar]) {
         }.execute()
     }
 
-    apply from: 'maven.gradle'
+//    apply from: 'maven.gradle'
 
 }
